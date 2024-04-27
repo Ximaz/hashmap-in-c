@@ -23,6 +23,7 @@ typedef struct s_hashmap {
     list_t buckets[HASHMAP_SIZE];
     hashmap_value_destroy_t destroy;
 } hashmap_t;
+
 /**
  * @brief Initialize the hasmap with the destroy function for entries' values.
  *

@@ -23,7 +23,6 @@ static int hashmap_replace(hashmap_t *hashmap, const char *key, void *value)
     return 0;
 }
 
-
 int hashmap_set(hashmap_t *hashmap, const char *key, void *value)
 {
     hashmap_entry_t *entry = NULL;
