@@ -163,41 +163,10 @@ jobs:
                 timeout-minutes: 1
                 run: "[[ $(grep -E \"^tests_run:\" Makefile) == \"\" ]] && exit 0 || make tests_run"
 
-    check-push-commits:
-        runs-on: "ubuntu-latest"
-        needs:
-            -   "basics"
-            -   "run-tests"
-        outputs:
-            continue: "${{ steps.publishing-check.outputs.continue }}"
-        steps:
-            -   id: "publishing-check"
-                continue-on-error: true
-                env:
-                    PERSONNAL_ACCESS_TOKEN: "${{ secrets.PERSONNAL_ACCESS_TOKEN }}"
-                if: "${{ env.PERSONNAL_ACCESS_TOKEN }}"
-                run: "echo \"continue=1\" >> $GITHUB_OUTPUT"
-
-    push-commits:
-        needs:
-            -   "check-push-commits"
-        runs-on: "ubuntu-latest"
-        if: "${{ needs.check-push-commits.outputs.continue == '1' && format('refs/heads/{0}', github.event.repository.default_branch) != github.ref }}"
-        steps:
-            -   name: "Checkout"
-                uses: "actions/checkout@v4.1.1"
-                with:
-                    fetch-depth: 0
-
-            -   name: "Push all commits"
-                env:
-                    GITHUB_TOKEN: "${{ secrets.PERSONNAL_ACCESS_TOKEN }}"
-                run: "git push origin ${{ github.ref_name }}:${{ github.event.repository.default_branch }}"
-
     check-mirror-commits:
         runs-on: "ubuntu-latest"
         needs:
-            -   "push-commits"
+            -   "run-tests"
         outputs:
             continue: "${{ steps.mirroring-check.outputs.continue }}"
         steps:
