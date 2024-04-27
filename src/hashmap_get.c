@@ -9,7 +9,7 @@
 #include "hashmap.h"
 #include "list.h"
 
-void *hashmap_get(hashmap_t *hashmap, const char *key)
+void *hashmap_get(const hashmap_t *hashmap, const char *key)
 {
     hashmap_entry_t *entry = hashmap_get_entry(hashmap, key);
 

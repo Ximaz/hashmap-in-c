@@ -2,9 +2,9 @@ a.out
 *.o
 *.so
 *.a
+*.dylib
 *.gcno
 *.gcda
 *.log
 unit_tests
-liblist.so
 .vscode
