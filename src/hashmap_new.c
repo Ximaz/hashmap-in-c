@@ -18,6 +18,6 @@ void hashmap_new(hashmap_t *hashmap, hashmap_value_destroy_t destroy)
     hashmap->destroy = destroy;
     for (; i < HASHMAP_SIZE; ++i) {
         bucket = &(hashmap->buckets[i]);
-        bucket->destroy = free;
+        bucket->destroy = NULL;
     }
 }

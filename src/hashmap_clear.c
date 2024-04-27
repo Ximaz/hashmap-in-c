@@ -5,6 +5,7 @@
 ** hashmap_clear.c
 */
 
+#include <stdlib.h>
 #include <stddef.h>
 #include "hashmap.h"
 #include "list.h"
@@ -18,10 +19,10 @@ static void hashmap_destroy_bucket(list_t *bucket,
         entry = list_pop_front(bucket);
         while (NULL != entry) {
             destroy(entry->value);
+            free(entry);
             entry = list_pop_front(bucket);
         }
     }
-    list_clear(bucket);
 }
 
 void hashmap_clear(hashmap_t *hashmap)
