@@ -5,6 +5,7 @@
 ## Makefile
 ##
 
+LIB_NAME		:=	hashmap
 LIB_PATH		:=	/usr/local/lib
 INCLUDE_PATH	:=	/usr/local/include/list
 
@@ -46,17 +47,17 @@ VALGRIND_FLAGS	:=	-s							\
 RM				:=	rm -rf
 
 all:	$(OBJS)
-	$(MAKE) libhashmap.a
-	$(MAKE) libhashmap.so
-	$(MAKE) libhashmap.dylib
+	$(MAKE) lib$(LIB_NAME).a
+	$(MAKE) lib$(LIB_NAME).so
+	$(MAKE) lib$(LIB_NAME).dylib
 
-libhashmap.so:	$(OBJS)
+lib$(LIB_NAME).so:	$(OBJS)
 	@$(CC) -shared $(CFLAGS) $(OBJS) -o $@
 
-libhashmap.dylib:	$(OBJS)
+lib$(LIB_NAME).dylib:	$(OBJS)
 	@$(CC) -shared $(CFLAGS) $(OBJS) -o $@
 
-libhashmap.a:	$(OBJS)
+lib$(LIB_NAME).a:	$(OBJS)
 	@ar -rcs $@ $(OBJS)
 
 tests/%.o:	CFLAGS = -Wall -Wextra -Werror
@@ -71,20 +72,20 @@ tests_run:	fclean	$(OBJS)	$(TESTS_OBJS)
 
 install:	all
 	@mkdir -p $(INCLUDE_PATH)
-	@mv libhashmap.a $(LIB_PATH)
-	@mv libhashmap.so $(LIB_PATH)
-	@mv libhashmap.dylib $(LIB_PATH)
+	@mv lib$(LIB_NAME).a $(LIB_PATH)
+	@mv lib$(LIB_NAME).so $(LIB_PATH)
+	@mv lib$(LIB_NAME).dylib $(LIB_PATH)
 	@cp include/list.h $(INCLUDE_PATH)
-	@cp include/hashmap.h $(INCLUDE_PATH)
+	@cp include/$(LIB_NAME).h $(INCLUDE_PATH)
 	@echo "Lib installed. Use 'ldconfig' or 'update_dyld_shared_cache' to \
 	refresh ld cache"
 
 uninstall:
-	@$(RM) $(LIB_PATH)/libhashmap.a
-	@$(RM) $(LIB_PATH)/libhashmap.so
-	@$(RM) $(LIB_PATH)/libhashmap.dylib
+	@$(RM) $(LIB_PATH)/lib$(LIB_NAME).a
+	@$(RM) $(LIB_PATH)/lib$(LIB_NAME).so
+	@$(RM) $(LIB_PATH)/lib$(LIB_NAME).dylib
 	@$(RM) $(INCLUDE_PATH)/list.h
-	@$(RM) $(INCLUDE_PATH)/hashmap.h
+	@$(RM) $(INCLUDE_PATH)/$(LIB_NAME).h
 	@echo "Lib uninstalled. Use 'ldconfig' or 'update_dyld_shared_cache' to \
 	refresh ld cache"
 
@@ -98,7 +99,7 @@ clean:
 	@$(RM) $(shell find . -type f -name '*.gcda')
 
 fclean:	clean
-	@$(RM) libhashmap.so libhashmap.a libhashmap.dylib
+	@$(RM) lib$(LIB_NAME).so lib$(LIB_NAME).a lib$(LIB_NAME).dylib
 	@$(RM) unit_tests
 
 re:	fclean	all

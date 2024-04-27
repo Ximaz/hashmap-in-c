@@ -22,6 +22,12 @@ static void hashmap_destroy_bucket(list_t *bucket,
             free(entry);
             entry = list_pop_front(bucket);
         }
+    } else {
+        entry = list_pop_front(bucket);
+        while (NULL != entry) {
+            free(entry);
+            entry = list_pop_front(bucket);
+        }
     }
 }
 

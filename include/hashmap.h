@@ -59,7 +59,7 @@ int hashmap_set(hashmap_t *hashmap, const char *key, void *value);
  * @param[in] key
  * @return Non-NULL hashmap entry on success, NULL on error (not found)
  */
-hashmap_entry_t *hashmap_get_entry(hashmap_t *hashmap, const char *key);
+hashmap_entry_t *hashmap_get_entry(const hashmap_t *hashmap, const char *key);
 
 /**
  * @brief Get the value stored in the hashmap with the key.
@@ -68,7 +68,7 @@ hashmap_entry_t *hashmap_get_entry(hashmap_t *hashmap, const char *key);
  * @param[in] key
  * @return Non-NULL element on success, NULL on error (not found)
  */
-void *hashmap_get(hashmap_t *hashmap, const char *key);
+void *hashmap_get(const hashmap_t *hashmap, const char *key);
 
 /**
  * @brief Delete the value stored in the hashmap with the key.
