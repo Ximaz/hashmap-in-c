@@ -9,35 +9,27 @@
 #include <stdlib.h>
 #include <string.h>
 #include "hashmap.h"
-#include "list.h"
 
-static void *hashmap_delete_entry(hashmap_entry_t *entry)
+void hashmap_delete(hashmap_t *hashmap, const char *key)
 {
-    void *value = NULL;
+    hashmap_entry_t *new_entry = NULL;
+    hash_t hash = hashmap_hash(key);
+    hashmap_entry_t **head = &(hashmap->buckets[hash].head);
 
-    value = entry->value;
-    free(entry);
-    return value;
-}
-
-void *hashmap_delete(hashmap_t *hashmap, const char *key)
-{
-    size_t i = 0;
-    hashmap_entry_t *entry = NULL;
-    int hash = hashmap_hash(key, strlen(key));
-    list_t *bucket = &(hashmap->buckets[hash]);
-    size_t bucket_count = list_count(bucket);
-
-    if (1 == bucket_count) {
-        entry = list_pop_front(bucket);
-        return hashmap_delete_entry(entry);
-    }
-    for (; i < bucket_count; ++i) {
-        entry = list_value_at(bucket, i);
-        if (0 == strcmp(key, entry->key)) {
-            entry = list_remove_at(bucket, i);
-            return hashmap_delete_entry(entry);
+    while (NULL != (*head)) {
+        if (0 != strcmp(key, (*head)->key)) {
+            (*head) = (*head)->next;
+            continue;
         }
+        new_entry = (*head)->prev ? (*head)->prev : (*head)->next;
+        if (NULL != (*head)->prev)
+            (*head)->prev->next = (*head)->next;
+        if (NULL != (*head)->next)
+            (*head)->next->prev = (*head)->prev;
+        if (NULL != hashmap->destroy)
+            hashmap->destroy((*head)->value);
+        free((*head));
+        (*head) = new_entry;
+        return;
     }
-    return NULL;
 }

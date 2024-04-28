@@ -7,7 +7,7 @@
 
 LIB_NAME		:=	hashmap
 LIB_PATH		:=	/usr/local/lib
-INCLUDE_PATH	:=	/usr/local/include/list
+INCLUDE_PATH	:=	/usr/local/include/$(LIB_NAME)
 
 CC				:=	gcc
 CPPFLAGS		:=	-Iinclude/
@@ -75,7 +75,6 @@ install:	all
 	@mv lib$(LIB_NAME).a $(LIB_PATH)
 	@mv lib$(LIB_NAME).so $(LIB_PATH)
 	@mv lib$(LIB_NAME).dylib $(LIB_PATH)
-	@cp include/list.h $(INCLUDE_PATH)
 	@cp include/$(LIB_NAME).h $(INCLUDE_PATH)
 	@echo "Lib installed. Use 'ldconfig' or 'update_dyld_shared_cache' to \
 	refresh ld cache"
@@ -84,7 +83,6 @@ uninstall:
 	@$(RM) $(LIB_PATH)/lib$(LIB_NAME).a
 	@$(RM) $(LIB_PATH)/lib$(LIB_NAME).so
 	@$(RM) $(LIB_PATH)/lib$(LIB_NAME).dylib
-	@$(RM) $(INCLUDE_PATH)/list.h
 	@$(RM) $(INCLUDE_PATH)/$(LIB_NAME).h
 	@echo "Lib uninstalled. Use 'ldconfig' or 'update_dyld_shared_cache' to \
 	refresh ld cache"
