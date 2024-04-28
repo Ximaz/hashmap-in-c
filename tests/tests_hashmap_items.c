@@ -22,7 +22,7 @@ Test(hashmap_keys, test_impl)
 
     hashmap_new(&hashmap, NULL);
     for (; i < 4; ++i)
-        hashmap_set(&hashmap, expected[i], NULL);
+        hashmap_set(&hashmap, expected[i], NULL, NULL);
     keys = hashmap_keys(&hashmap);
     hashmap_clear(&hashmap);
     cr_assert(ne(ptr, keys, NULL));
@@ -48,7 +48,7 @@ Test(hashmap_values, test_impl)
 
     hashmap_new(&hashmap, NULL);
     for (; i < 4; ++i)
-        hashmap_set(&hashmap, keys[i], expected[i]);
+        hashmap_set(&hashmap, keys[i], NULL, expected[i]);
     values = hashmap_values(&hashmap);
     hashmap_clear(&hashmap);
     cr_assert(ne(ptr, values, NULL));
@@ -79,7 +79,7 @@ Test(hashmap_items, test_impl)
 
     hashmap_new(&hashmap, NULL);
     for (; i < 4; ++i)
-        hashmap_set(&hashmap, e_keys[i], e_values[i]);
+        hashmap_set(&hashmap, e_keys[i], NULL, e_values[i]);
     items = hashmap_items(&hashmap);
     hashmap_clear(&hashmap);
     cr_assert(ne(ptr, items, NULL));

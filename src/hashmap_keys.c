@@ -18,7 +18,7 @@ static void hashmap_fill_keys(const hashmap_t *hashmap, hashmap_keys_t *keys)
     for (; i < HASHMAP_SIZE; ++i) {
         entry = hashmap->buckets[i].head;
         while (NULL != entry) {
-            keys->keys[j] = entry->key;
+            keys->keys[j] = entry->key->key;
             entry = entry->next;
             ++j;
         }
