@@ -161,7 +161,31 @@ jobs:
 
             -   name: "Run tests"
                 timeout-minutes: 1
-                run: "[[ $(grep -E \"^tests_run:\" Makefile) == \"\" ]] && exit 0 || make tests_run"
+                run: "[[ $(grep -E \"^tests_run:\" Makefile) == \"\" ]] && exit 0 || make tests_run && [ -f \"unit_tests\" ] || exit 1"
+
+            -   name: "Run valgrind"
+                run: "valgrind -s --leak-check=full --track-origins=yes --read-var-info=yes --trace-children=yes --show-leak-kinds=all --read-inline-info=yes --errors-for-leak-kinds=all ./unit_tests 2>valgrind-reports.log"
+
+            -   name: "Analyze valgrind report"
+                run: |
+                    status=0
+                    block=""
+                    while IFS= read -r line; do
+                        if [[ "${block}" != "" ]]; then
+                            if [[ $(echo "${line}" | grpe -E '^==\d+== $') ]]; then
+                                echo "::error title=\"Valgrind Error\"" ${block}"
+                                block=""
+                                status=1
+                            else
+                                block="${block}\n${line}"
+                            fi
+                        fi
+                        if [[ $(echo "${line}" | grpe -E '^==\d+== \d+ bytes in \d+ blocks are definitively lost') ]]; then
+                            block="${line}"
+                        fi
+                    done < valgrind-reports.log
+                    rm -f valgrind-reports.log
+                    exit "${status}"
 
     check-mirror-commits:
         runs-on: "ubuntu-latest"

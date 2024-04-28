@@ -90,7 +90,7 @@ uninstall:
 	refresh ld cache"
 
 valgrind:	tests_run
-	valgrind $(VALGRIND_FLAGS) ./unit_tests
+	valgrind $(VALGRIND_FLAGS) ./unit_tests 2>valgrind-reports-err.log 1>valgrind-reports.log
 
 clean:
 	@$(RM) $(OBJS)

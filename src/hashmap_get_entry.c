@@ -18,6 +18,8 @@ hashmap_entry_t *hashmap_get_entry(const hashmap_t *hashmap, const char *key)
     const list_t *bucket = &(hashmap->buckets[hash]);
     size_t bucket_count = list_count(bucket);
 
+    if (1 == bucket_count)
+        return list_value_at(bucket, i);
     for (; i < bucket_count; ++i) {
         entry = list_value_at(bucket, i);
         if (0 == strcmp(key, entry->key))
