@@ -11,12 +11,12 @@
 #include "hashmap.h"
 #include "list.h"
 
-/* free(entry); */
 static void *hashmap_delete_entry(hashmap_entry_t *entry)
 {
     void *value = NULL;
 
     value = entry->value;
+    free(entry);
     return value;
 }
 
