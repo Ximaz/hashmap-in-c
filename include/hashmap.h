@@ -68,6 +68,8 @@ const hashmap_entry_t *hashmap_entry_get(const hashmap_t *hashmap,
 void hashmap_entries_destroy(hashmap_entries_t *entries,
     hashmap_value_destroy_t destroy);
 
+size_t hashmap_entries_count(const hashmap_t *hashmap);
+
 /**
  * @brief Initialize the hasmap with the destroy function for entries' values.
  *
