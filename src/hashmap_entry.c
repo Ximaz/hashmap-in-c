@@ -44,6 +44,8 @@ const hashmap_entry_t *hashmap_entry_get(const hashmap_t *hashmap,
     hash_t hash = hashmap_hash(key);
     const hashmap_entry_t *head = hashmap->buckets[hash].head;
 
+    if (NULL != head && NULL == head->next)
+        return head;
     while (NULL != head) {
         if (0 == strcmp(key, head->key))
             return head;
