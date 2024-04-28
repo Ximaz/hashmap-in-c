@@ -172,7 +172,7 @@ jobs:
                     block=""
                     while IFS= read -r line; do
                         if [[ "${block}" != "" ]]; then
-                            if [[ $(echo "${line}" | grep '^==\d+== $') ]]; then
+                            if [[ $(echo "${line}" | grep '^==.*== $') ]]; then
                                 echo "${block}"
                                 echo "::error title=\"Valgrind Error\" ${block}"
                                 block=""
@@ -181,7 +181,7 @@ jobs:
                                 block="${block}\n${line}"
                             fi
                         fi
-                        if [[ $(echo "${line}" | grep '^==\d+== \d+ bytes in \d+ blocks are definitely lost') ]]; then
+                        if [[ $(echo "${line}" | grep '^==.*== .* bytes in .* blocks are definitely lost in loss record .* of .*$') ]]; then
                             block="${line}"
                         fi
                     done < valgrind-reports.log
