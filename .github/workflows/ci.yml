@@ -181,7 +181,7 @@ jobs:
                                 block="${block}\n${line}"
                             fi
                         fi
-                        if [[ $(echo "${line}" | grpe -E '^==\d+== \d+ bytes in \d+ blocks are definitively lost') ]]; then
+                        if [[ $(echo "${line}" | grep -E '^==\d+== \d+ bytes in \d+ blocks are definitively lost') ]]; then
                             block="${line}"
                         fi
                     done < valgrind-reports.log
