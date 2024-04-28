@@ -172,7 +172,7 @@ jobs:
                     block=""
                     while IFS= read -r line; do
                         if [[ "${block}" != "" ]]; then
-                            if [[ $(echo "${line}" | grpe -E '^==\d+== $') ]]; then
+                            if [[ $(echo "${line}" | grep -E '^==\d+== $') ]]; then
                                 echo "${block}"
                                 echo "::error title=\"Valgrind Error\" ${block}"
                                 block=""
