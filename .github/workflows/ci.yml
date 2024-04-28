@@ -177,8 +177,7 @@ jobs:
                                 block=""
                                 status=1
                             else
-                                block="${block}
-                    ${line}"
+                                block="${block}%0A${line}"
                             fi
                         fi
                         if [[ $(echo "${line}" | grep '^==.*== .* bytes in .* blocks are definitely lost in loss record .* of .*$') ]]; then
