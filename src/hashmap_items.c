@@ -19,7 +19,7 @@ static void hashmap_fill_items(const hashmap_t *hashmap,
     for (; i < HASHMAP_SIZE; ++i) {
         entry = hashmap->buckets[i].head;
         while (NULL != entry) {
-            items->items[j].key = entry->key;
+            items->items[j].key = entry->key->key;
             items->items[j].value = entry->value;
             entry = entry->next;
             ++j;

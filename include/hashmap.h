@@ -16,9 +16,14 @@ typedef void (*hashmap_value_destroy_t)(void *value);
 
 typedef size_t hash_t;
 
+typedef struct s_hashmap_key {
+    char *key;
+    void (*release)(char *key);
+} hashmap_key_t;
+
 typedef struct s_hashmap_entry {
     hash_t hash;
-    const char *key;
+    hashmap_key_t *key;
     void *value;
     struct s_hashmap_entry *prev;
     struct s_hashmap_entry *next;
@@ -58,7 +63,7 @@ typedef struct s_hashmap {
  * @brief Internal functions (must not be used by developers)
  */
 
-hashmap_entry_t *hashmap_entry_new(const char *key, void *value);
+hashmap_entry_t *hashmap_entry_new(hashmap_key_t *key, void *value);
 
 void hashmap_entry_set(hashmap_t *hashmap, hashmap_entry_t *entry);
 
@@ -92,10 +97,12 @@ hash_t hashmap_hash(const char *key);
  *
  * @param[in] hashmap
  * @param[in] key
+ * @param[in] release (may be NULL)
  * @param[in] value
  * @return 0 on success, -1 on error (unable to add the value to the hashmap)
  */
-int hashmap_set(hashmap_t *hashmap, const char *key, void *value);
+int hashmap_set(hashmap_t *hashmap, char *key, void (*release)(char *key),
+    void *value);
 
 /**
  * @brief Get the hashmap entry stored in the hashmap with the key.

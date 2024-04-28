@@ -34,10 +34,10 @@ Test(hashmap_set, test_impl)
     person_t *item = NULL;
 
     hashmap_new(&hashmap, my_free);
-    cr_assert(eq(int, 0, hashmap_set(&hashmap, "ximaz", &ximaz)));
+    cr_assert(eq(int, 0, hashmap_set(&hashmap, "ximaz", NULL, &ximaz)));
     item = hashmap_get(&hashmap, "ximaz");
     cr_assert(eq(ptr, item, &ximaz));
-    cr_assert(eq(int, 0, hashmap_set(&hashmap, "ximaz", &ximaz2)));
+    cr_assert(eq(int, 0, hashmap_set(&hashmap, "ximaz", NULL, &ximaz2)));
     item = hashmap_get(&hashmap, "ximaz");
     cr_assert(eq(ptr, item, &ximaz2));
     hashmap_clear(&hashmap);

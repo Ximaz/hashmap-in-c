@@ -38,8 +38,8 @@ Test(hashmap_delete, test_impl)
     };
 
     hashmap_new(&hashmap, my_free);
-    cr_assert(eq(int, 0, hashmap_set(&hashmap, "ximaz", &ximaz)));
-    cr_assert(eq(int, 0, hashmap_set(&hashmap, "zamix", &zamix)));
+    cr_assert(eq(int, 0, hashmap_set(&hashmap, "ximaz", NULL, &ximaz)));
+    cr_assert(eq(int, 0, hashmap_set(&hashmap, "zamix", NULL, &zamix)));
     hashmap_delete(&hashmap, "zamix");
     cr_assert(eq(int, 1, zamix.free));
     cr_assert(eq(int, 0, ximaz.free));
@@ -53,8 +53,8 @@ Test(hashmap_delete, test_impl)
     ximaz.free = 0;
     zamix.free = 0;
     hashmap_new(&hashmap, my_free);
-    cr_assert(eq(int, 0, hashmap_set(&hashmap, "zamix", &zamix)));
-    cr_assert(eq(int, 0, hashmap_set(&hashmap, "ximaz", &ximaz)));
+    cr_assert(eq(int, 0, hashmap_set(&hashmap, "zamix", NULL, &zamix)));
+    cr_assert(eq(int, 0, hashmap_set(&hashmap, "ximaz", NULL, &ximaz)));
     hashmap_delete(&hashmap, "zamix");
     cr_assert(eq(int, 1, zamix.free));
     cr_assert(eq(int, 0, ximaz.free));
@@ -67,10 +67,10 @@ Test(hashmap_delete, test_impl)
 
     ximaz.free = 0;
     hashmap_new(&hashmap, NULL);
-    cr_assert(eq(int, 0, hashmap_set(&hashmap, "ximaz1", &ximaz)));
-    cr_assert(eq(int, 0, hashmap_set(&hashmap, "ximaz2", &ximaz)));
-    cr_assert(eq(int, 0, hashmap_set(&hashmap, "ximaz3", &ximaz)));
-    cr_assert(eq(int, 0, hashmap_set(&hashmap, "ximaz4", &ximaz)));
+    cr_assert(eq(int, 0, hashmap_set(&hashmap, "ximaz1", NULL, &ximaz)));
+    cr_assert(eq(int, 0, hashmap_set(&hashmap, "ximaz2", NULL, &ximaz)));
+    cr_assert(eq(int, 0, hashmap_set(&hashmap, "ximaz3", NULL, &ximaz)));
+    cr_assert(eq(int, 0, hashmap_set(&hashmap, "ximaz4", NULL, &ximaz)));
     hashmap_clear(&hashmap);
     cr_assert(eq(int, 0, ximaz.free));
 }
