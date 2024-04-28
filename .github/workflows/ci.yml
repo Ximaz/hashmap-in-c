@@ -173,8 +173,7 @@ jobs:
                     while IFS= read -r line; do
                         if [[ "${block}" != "" ]]; then
                             if [[ $(echo "${line}" | grep '^==.*== $') ]]; then
-                                echo "${block}"
-                                echo "::error title=\"Valgrind Error\" ${block}"
+                                echo "::error title=\"Valgrind Error\"::${block}"
                                 block=""
                                 status=1
                             else
