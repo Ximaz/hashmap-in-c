@@ -134,7 +134,7 @@ jobs:
                 run: "echo \"${{ env.VALGRIND_SUPPRESSIONS }}\" > valgrind.supp"
 
             -   name: "Run valgrind"
-                run: "[ -f \"${{ env.UNIT_TESTS }}\" ] && valgrind -s --leak-check=full --track-origins=yes --read-var-info=yes --trace-children=yes --show-leak-kinds=all --read-inline-info=yes --errors-for-leak-kinds=all --track-fds=yes --show-reachable=yes --gen-suppressions=all --suppressions=valgrind.supp ${{ env.UNIT_TESTS }} 2>${{ env.VALGRIND_REPORTS }}"
+                run: "[ -f \"${{ env.UNIT_TESTS }}\" ] && valgrind -s --leak-check=full --track-origins=yes --read-var-info=yes --trace-children=yes --show-leak-kinds=all --read-inline-info=yes --errors-for-leak-kinds=all --track-fds=yes --show-reachable=yes --gen-suppressions=all --suppressions=/usr/libexec/valgrind/default.supp --suppressions=valgrind.supp ${{ env.UNIT_TESTS }} 2>${{ env.VALGRIND_REPORTS }}"
 
             -   name: "Analyze valgrind report"
                 run: |
