@@ -88,7 +88,7 @@ uninstall:
 	refresh ld cache"
 
 valgrind:	tests_run
-	valgrind $(VALGRIND_FLAGS) ./unit_tests
+	valgrind $(VALGRIND_FLAGS) CRITERION_NO_EARLY_EXIT=1 ./unit_tests
 
 clean:
 	@$(RM) $(OBJS)
