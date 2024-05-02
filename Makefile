@@ -1,6 +1,6 @@
 ##
 ## EPITECH PROJECT, 2024
-## List in C
+## Hashmap in C
 ## File description:
 ## Makefile
 ##
