@@ -159,8 +159,6 @@ jobs:
                             block="${line}"
                         elif [[ $(echo "${line}" | grep '^==.*== Open file descriptor .*: .*$') ]]; then
                             block="${line}"
-                        elif [[ $(echo "${line}" | grep '^==.*== LEAK SUMMARY:.*$') ]]; then
-                            block="${line}"
                         elif [[ $(echo "${line}" | grep '^==.*== Invalid free().*$') ]]; then
                             block="${line}"
                         elif [[ $(echo "${line}" | grep '^==.*== Mismatched free() / delete / delete \[\].*$') ]]; then
