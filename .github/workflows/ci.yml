@@ -143,7 +143,7 @@ jobs:
                     block=""
                     while IFS= read -r line; do
                         if [[ "${block}" != "" ]]; then
-                            if [[ $(echo "${line}" | grep '^==.*== $') && $(echo "${block}" | grep '^==.*==    by 0x.*: stdpipe_options (in /usr/local/lib/libcriterion.so.3.2.0)$') == "" && $(echo "${block}" | grep '^==.*== Open file descriptor .*: /dev/shm/bxf_arena_.* deleted.*$') == "" ]]; then
+                            if [[ $(echo "${line}" | grep '^==.*== $') && $(echo "${block}" | grep '==.*==    by 0x.*: stdpipe_options (in /usr/local/lib/libcriterion.so.3.2.0)') == "" && $(echo "${block}" | grep '==.*== Open file descriptor .*: /dev/shm/bxf_arena_.* deleted.*') == "" ]]; then
                                 echo "::error title=Valgrind Error::${block}"
                                 block=""
                                 status=1
