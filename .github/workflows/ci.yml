@@ -2,11 +2,9 @@ name: "ci"
 
 on:
     -   push
-    -   pull_request
 
 env:
     UNIT_TESTS: "./unit_tests"
-    VALGRIND_REPORTS: "./valgrind-reports.log"
     ARTIFACTS: "${{ vars.ARTIFACTS }}"
     MIRROR_URL: "${{ vars.MIRROR_URL }}"
     VALGRIND_SUPPRESSIONS: "${{ vars.VALGRIND_SUPPRESSIONS }}"
@@ -130,8 +128,8 @@ jobs:
                 timeout-minutes: 1
                 run: "[[ $(grep -E \"^tests_run:\" Makefile) == \"\" ]] && exit 0 || make tests_run"
 
-            -   name: "Valgrind Checks"
-                uses: "Ximaz/valgrind-action@v1.1.0"
+            -   name: "Run Valgrind"
+                uses: "Ximaz/valgrind-action@v1.2.0"
                 with:
                     binary_path: "./${{ env.UNIT_TESTS }}"
 
